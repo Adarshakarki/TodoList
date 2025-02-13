@@ -17,14 +17,15 @@ The To-Do List app is a simple and easy-to-use task manager that helps you stay 
 * Stay on top of your to-do list and manage your tasks effortlessly!
 
 ## Screenshots
+
+## Add New Task
 ![Add New Task](https://github.com/Adarshakarki/Todolist/blob/master/images/Screenshot_20250213-151630_To%20Do%20List.png)
-### Add New Task
 
-![Set Time](https://github.com/Adarshakarki/Todolist/blob/master/images/Screenshot_20250213-151620_To%20Do%20List.png)
 ### Set Time
+![Set Time](https://github.com/Adarshakarki/Todolist/blob/master/images/Screenshot_20250213-151620_To%20Do%20List.png)
 
-![Home](https://github.com/Adarshakarki/Todolist/blob/master/images/Screenshot_20250213-151731_To%20Do%20List.png)
 ### Home Screen
+![Home](https://github.com/Adarshakarki/Todolist/blob/master/images/Screenshot_20250213-151731_To%20Do%20List.png)
 
-![Edit Task](https://github.com/Adarshakarki/Todolist/blob/master/images/Screenshot_20250213-151701_To%20Do%20List.png)
 ### Edit Task
+![Edit Task](https://github.com/Adarshakarki/Todolist/blob/master/images/Screenshot_20250213-151701_To%20Do%20List.png)
