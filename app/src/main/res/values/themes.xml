@@ -1,5 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-
     <style name="Theme.Todolist" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@color/LightYellow</item>
         <item name="colorPrimaryVariant">@color/LightYellow</item>
@@ -8,6 +7,4 @@
         <item name="colorOnSecondary">@color/black</item>
         <item name="colorSurface">@color/white</item>
     </style>
-
-    <style name="Theme.Todolist." parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
