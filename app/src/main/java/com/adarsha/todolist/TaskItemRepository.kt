@@ -18,4 +18,10 @@ class TaskItemRepository(private val taskItemDao: TaskItemDao)
     {
         taskItemDao.updateTaskItem(taskItem)
     }
+
+    @WorkerThread
+    suspend fun deleteTaskItem(taskItem: TaskItem)
+    {
+        taskItemDao.deleteTaskItem(taskItem)
+    }
 }

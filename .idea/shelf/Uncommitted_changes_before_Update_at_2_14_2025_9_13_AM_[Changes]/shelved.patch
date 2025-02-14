@@ -1,0 +1,209 @@
+Index: app/src/main/res/layout/task_item_cell.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.cardview.widget.CardView\r\n    android:id=\"@+id/taskCellContainer\"\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"90dp\"\r\n    app:cardCornerRadius=\"5dp\"\r\n    android:layout_margin=\"5dp\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\">\r\n\r\n    <LinearLayout\r\n        android:orientation=\"horizontal\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n\r\n        <ImageButton\r\n            android:id=\"@+id/completeButton\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginHorizontal=\"15dp\"\r\n            android:backgroundTint=\"@android:color/transparent\"\r\n            android:contentDescription=\"@string/checkbox\"\r\n            android:scaleX=\"1.5\"\r\n            android:scaleY=\"1.5\"\r\n            android:src=\"@drawable/unchecked_24\"\r\n            android:layout_gravity=\"center\"/>\r\n\r\n        <TextView\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:id=\"@id/name\"\r\n            android:text=\"@string/place_holder\"\r\n            style=\"@style/TextAppearance.MaterialComponents.Headline5\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_weight=\"1\"/>\r\n\r\n        <TextView\r\n            android:layout_marginHorizontal=\"5dp\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:id=\"@+id/dueTime\"\r\n            android:text=\"@string/place_holder\"\r\n            style=\"@style/TextAppearance.AppCompat.Title\"\r\n            android:layout_gravity=\"center\"\r\n            />\r\n\r\n    </LinearLayout>\r\n</androidx.cardview.widget.CardView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/task_item_cell.xml b/app/src/main/res/layout/task_item_cell.xml
+--- a/app/src/main/res/layout/task_item_cell.xml	(revision c7ece8ff73335cde6e61da112d708e546c5febb2)
++++ b/app/src/main/res/layout/task_item_cell.xml	(date 1739503525623)
+@@ -44,5 +44,15 @@
+             android:layout_gravity="center"
+             />
+ 
++        <ImageButton
++            android:contentDescription="@string/delete"
++            android:id="@+id/deleteButton"
++            android:layout_width="48dp"
++            android:layout_height="48dp"
++            android:src="@drawable/delete_24px"
++            android:layout_gravity="center"
++            android:scaleY="1.5"
++            android:backgroundTint="@android:color/transparent"
++            app:tint="@color/red" />
+     </LinearLayout>
+ </androidx.cardview.widget.CardView>
+\ No newline at end of file
+Index: app/src/main/java/com/adarsha/todolist/TaskItemViewHolder.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.adarsha.todolist\r\n\r\nimport android.content.Context\r\nimport android.graphics.Paint\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.adarsha.todolist.databinding.TaskItemCellBinding\r\nimport java.time.format.DateTimeFormatter\r\n\r\nclass TaskItemViewHolder(\r\n    private val context: Context,\r\n    private val binding: TaskItemCellBinding,\r\n    private val clickListener: TaskItemClickListener\r\n): RecyclerView.ViewHolder(binding.root)\r\n{\r\n    private val timeFormat = DateTimeFormatter.ofPattern(\"HH:mm\")\r\n\r\n    fun bindTaskItem(taskItem: TaskItem)\r\n    {\r\n        binding.name.text = taskItem.name\r\n\r\n        if (taskItem.isCompleted()){\r\n            binding.name.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG\r\n            binding.dueTime.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG\r\n        }\r\n\r\n        binding.completeButton.setImageResource(taskItem.imageResource())\r\n        binding.completeButton.setColorFilter(taskItem.imageColor(context))\r\n\r\n        binding.completeButton.setOnClickListener{\r\n            clickListener.completeTaskItem(taskItem)\r\n        }\r\n        binding.taskCellContainer.setOnClickListener{\r\n            clickListener.editTaskItem(taskItem)\r\n        }\r\n\r\n        if(taskItem.dueTime() != null)\r\n            binding.dueTime.text = timeFormat.format(taskItem.dueTime())\r\n        else\r\n            binding.dueTime.text = \"\"\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/adarsha/todolist/TaskItemViewHolder.kt b/app/src/main/java/com/adarsha/todolist/TaskItemViewHolder.kt
+--- a/app/src/main/java/com/adarsha/todolist/TaskItemViewHolder.kt	(revision c7ece8ff73335cde6e61da112d708e546c5febb2)
++++ b/app/src/main/java/com/adarsha/todolist/TaskItemViewHolder.kt	(date 1739503132930)
+@@ -33,6 +33,10 @@
+             clickListener.editTaskItem(taskItem)
+         }
+ 
++        binding.deleteButton.setOnClickListener {
++            clickListener.deleteTaskItem(taskItem)
++        }
++
+         if(taskItem.dueTime() != null)
+             binding.dueTime.text = timeFormat.format(taskItem.dueTime())
+         else
+Index: app/src/main/java/com/adarsha/todolist/TaskViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.adarsha.todolist\r\n\r\nimport androidx.lifecycle.LiveData\r\nimport androidx.lifecycle.asLiveData\r\nimport androidx.lifecycle.ViewModel\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport androidx.lifecycle.viewModelScope\r\nimport kotlinx.coroutines.launch\r\nimport java.time.LocalDate\r\n\r\n\r\nclass TaskViewModel(private val repository: TaskItemRepository): ViewModel()\r\n{\r\n    val taskItems: LiveData<List<TaskItem>> = repository.allTaskItems.asLiveData()\r\n\r\n    fun addTaskItem(taskItem: TaskItem) = viewModelScope.launch {\r\n        repository.insertTaskItem(taskItem)\r\n    }\r\n\r\n    fun updateTaskItem(taskItem: TaskItem) = viewModelScope.launch {\r\n        repository.updateTaskItem(taskItem)\r\n    }\r\n\r\n    fun setCompleted(taskItem: TaskItem) = viewModelScope.launch {\r\n        if (!taskItem.isCompleted())\r\n            taskItem.completedDateString = TaskItem.dateFormatter.format(LocalDate.now())\r\n        repository.updateTaskItem(taskItem)\r\n    }\r\n}\r\n\r\nclass TaskItemModelFactory(private val repository: TaskItemRepository) : ViewModelProvider.Factory {\r\n    @Suppress(\"UNCHECKED_CAST\")\r\n    override fun <T : ViewModel> create(modelClass: Class<T>): T {\r\n        return if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {\r\n            TaskViewModel(repository) as T\r\n        } else {\r\n            throw IllegalArgumentException(\"Unknown ViewModel class: ${modelClass.name}\")\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/adarsha/todolist/TaskViewModel.kt b/app/src/main/java/com/adarsha/todolist/TaskViewModel.kt
+--- a/app/src/main/java/com/adarsha/todolist/TaskViewModel.kt	(revision c7ece8ff73335cde6e61da112d708e546c5febb2)
++++ b/app/src/main/java/com/adarsha/todolist/TaskViewModel.kt	(date 1739498831103)
+@@ -21,6 +21,10 @@
+         repository.updateTaskItem(taskItem)
+     }
+ 
++    fun deleteTaskItem(taskItem: TaskItem)=viewModelScope.launch {
++        repository.deleteTaskItem(taskItem)
++    }
++
+     fun setCompleted(taskItem: TaskItem) = viewModelScope.launch {
+         if (!taskItem.isCompleted())
+             taskItem.completedDateString = TaskItem.dateFormatter.format(LocalDate.now())
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    alias(libs.plugins.android.application)\r\n    alias(libs.plugins.kotlin.android)\r\n    alias(libs.plugins.kotlin.compose)\r\n    id(\"com.google.devtools.ksp\") version \"2.0.21-1.0.27\"}\r\n\r\nandroid {\r\n    namespace = \"com.adarsha.todolist\"\r\n    compileSdk = 35\r\n\r\n    defaultConfig {\r\n        applicationId = \"com.adarsha.todolist\"\r\n        minSdk = 26\r\n        targetSdk = 35\r\n        versionCode = 1\r\n        versionName = \"1.0\"\r\n\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildFeatures{\r\n        viewBinding = true\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = false\r\n            proguardFiles(\r\n                getDefaultProguardFile(\"proguard-android-optimize.txt\"),\r\n                \"proguard-rules.pro\"\r\n            )\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_11\r\n        targetCompatibility = JavaVersion.VERSION_11\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = \"11\"\r\n    }\r\n    buildFeatures {\r\n        compose = true\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation(libs.androidx.core.ktx)\r\n    implementation(libs.androidx.lifecycle.runtime.ktx)\r\n    implementation(libs.androidx.activity.compose)\r\n    implementation(platform(libs.androidx.compose.bom))\r\n    implementation(libs.androidx.ui)\r\n    implementation(libs.androidx.ui.graphics)\r\n    implementation(libs.androidx.ui.tooling.preview)\r\n    implementation(libs.androidx.material3)\r\n    implementation(libs.androidx.runner)\r\n    testImplementation(libs.junit)\r\n    androidTestImplementation(libs.androidx.junit)\r\n    androidTestImplementation(libs.androidx.espresso.core)\r\n    androidTestImplementation(platform(libs.androidx.compose.bom))\r\n    androidTestImplementation(libs.androidx.ui.test.junit4)\r\n    debugImplementation(libs.androidx.ui.tooling)\r\n    debugImplementation(libs.androidx.ui.test.manifest)\r\n    implementation(libs.material)\r\n    implementation(libs.androidx.room.ktx)\r\n    implementation(libs.androidx.room.runtime)\r\n    ksp(libs.androidx.room.compiler)\r\n    implementation(libs.androidx.lifecycle.livedata.ktx)\r\n    implementation(libs.androidx.lifecycle.viewmodel.ktx)\r\n    implementation(libs.androidx.activity.ktx)\r\n    implementation(libs.androidx.fragment.ktx)\r\n    }
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision c7ece8ff73335cde6e61da112d708e546c5febb2)
++++ b/app/build.gradle.kts	(date 1739500360166)
+@@ -29,6 +29,7 @@
+                 getDefaultProguardFile("proguard-android-optimize.txt"),
+                 "proguard-rules.pro"
+             )
++            signingConfig = signingConfigs.getByName("debug")
+         }
+     }
+     compileOptions {
+Index: app/src/main/java/com/adarsha/todolist/TaskItem.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.adarsha.todolist\r\n\r\nimport java.time.LocalDate\r\nimport java.time.LocalTime\r\nimport android.content.Context\r\nimport androidx.core.content.ContextCompat\r\nimport androidx.room.ColumnInfo\r\nimport androidx.room.Entity\r\nimport androidx.room.PrimaryKey\r\nimport java.time.format.DateTimeFormatter\r\n\r\n@Entity(tableName = \"task_item_table\")\r\nclass TaskItem(\r\n    @ColumnInfo(name = \"name\") var name: String,\r\n    @ColumnInfo(name = \"desc\") var desc: String,\r\n    @ColumnInfo(name = \"dueTimeString\") var dueTimeString: String?,\r\n    @ColumnInfo(name = \"completedDateString\") var completedDateString: String?,\r\n    @PrimaryKey(autoGenerate = true) var id: Int = 0\r\n)\r\n{\r\n\r\n    private fun completedDate(): LocalDate? = if (completedDateString == null) null else LocalDate.parse(completedDateString, dateFormatter)\r\n    fun dueTime(): LocalTime? = if (dueTimeString == null) null else LocalTime.parse(dueTimeString, timeFormatter)\r\n\r\n    fun isCompleted() = completedDate() != null\r\n    fun imageResource(): Int = if(isCompleted()) R.drawable.checked_24 else R.drawable.unchecked_24\r\n    fun imageColor(context: Context): Int = if(isCompleted()) navy(context) else black(context)\r\n\r\n    private fun navy(context: Context) = ContextCompat.getColor(context, R.color.navy)\r\n    private fun black(context: Context) = ContextCompat.getColor(context, R.color.black)\r\n\r\n    companion object {\r\n        val timeFormatter: DateTimeFormatter = DateTimeFormatter.ISO_TIME\r\n        val dateFormatter: DateTimeFormatter = DateTimeFormatter.ISO_DATE\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/adarsha/todolist/TaskItem.kt b/app/src/main/java/com/adarsha/todolist/TaskItem.kt
+--- a/app/src/main/java/com/adarsha/todolist/TaskItem.kt	(revision c7ece8ff73335cde6e61da112d708e546c5febb2)
++++ b/app/src/main/java/com/adarsha/todolist/TaskItem.kt	(date 1739499091306)
+@@ -10,7 +10,7 @@
+ import java.time.format.DateTimeFormatter
+ 
+ @Entity(tableName = "task_item_table")
+-class TaskItem(
++data class TaskItem(
+     @ColumnInfo(name = "name") var name: String,
+     @ColumnInfo(name = "desc") var desc: String,
+     @ColumnInfo(name = "dueTimeString") var dueTimeString: String?,
+@@ -18,7 +18,6 @@
+     @PrimaryKey(autoGenerate = true) var id: Int = 0
+ )
+ {
+-
+     private fun completedDate(): LocalDate? = if (completedDateString == null) null else LocalDate.parse(completedDateString, dateFormatter)
+     fun dueTime(): LocalTime? = if (dueTimeString == null) null else LocalTime.parse(dueTimeString, timeFormatter)
+ 
+Index: app/src/main/java/com/adarsha/todolist/TaskItemClickListener.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.adarsha.todolist\r\n\r\ninterface TaskItemClickListener\r\n{\r\n    fun editTaskItem(taskItem: TaskItem)\r\n    fun completeTaskItem(taskItem: TaskItem)\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/adarsha/todolist/TaskItemClickListener.kt b/app/src/main/java/com/adarsha/todolist/TaskItemClickListener.kt
+--- a/app/src/main/java/com/adarsha/todolist/TaskItemClickListener.kt	(revision c7ece8ff73335cde6e61da112d708e546c5febb2)
++++ b/app/src/main/java/com/adarsha/todolist/TaskItemClickListener.kt	(date 1739499790219)
+@@ -4,4 +4,5 @@
+ {
+     fun editTaskItem(taskItem: TaskItem)
+     fun completeTaskItem(taskItem: TaskItem)
++    fun deleteTaskItem(taskItem: TaskItem)
+ }
+\ No newline at end of file
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"purple_200\">#FFBB86FC</color>\r\n    <color name=\"purple_500\">#FF6200EE</color>\r\n    <color name=\"purple_700\">#FF3700B3</color>\r\n    <color name=\"teal_200\">#FF03DAC5</color>\r\n    <color name=\"teal_700\">#FF018786</color>\r\n    <color name=\"black\">#FF000000</color>\r\n    <color name=\"white\">#FFFFFFFF</color>\r\n    <color name=\"yellow\">#FFEB00</color>\r\n    <color name=\"navy\">#493D9E</color>\r\n    <color name=\"LightYellow\">#FFF2AF</color>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/colors.xml b/app/src/main/res/values/colors.xml
+--- a/app/src/main/res/values/colors.xml	(revision c7ece8ff73335cde6e61da112d708e546c5febb2)
++++ b/app/src/main/res/values/colors.xml	(date 1739500247391)
+@@ -10,4 +10,5 @@
+     <color name="yellow">#FFEB00</color>
+     <color name="navy">#493D9E</color>
+     <color name="LightYellow">#FFF2AF</color>
++    <color name="red">#FF0000</color>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/drawable/delete_24px.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/delete_24px.xml b/app/src/main/res/drawable/delete_24px.xml
+new file mode 100644
+--- /dev/null	(date 1739501652003)
++++ b/app/src/main/res/drawable/delete_24px.xml	(date 1739501652003)
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960">
++  <path
++      android:fillColor="@android:color/black"
++      android:pathData="M280,840Q247,840 223.5,816.5Q200,793 200,760L200,240L160,240L160,160L360,160L360,120L600,120L600,160L800,160L800,240L760,240L760,760Q760,793 736.5,816.5Q713,840 680,840L280,840ZM680,240L280,240L280,760Q280,760 280,760Q280,760 280,760L680,760Q680,760 680,760Q680,760 680,760L680,240ZM360,680L440,680L440,320L360,320L360,680ZM520,680L600,680L600,320L520,320L520,680ZM280,240L280,240L280,760Q280,760 280,760Q280,760 280,760L280,760Q280,760 280,760Q280,760 280,760L280,240Z"/>
++</vector>
+Index: app/src/main/java/com/adarsha/todolist/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.adarsha.todolist\r\n\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport androidx.activity.viewModels\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport com.adarsha.todolist.databinding.ActivityMainBinding\r\n\r\nclass MainActivity : AppCompatActivity(), TaskItemClickListener {\r\n    private lateinit var binding: ActivityMainBinding\r\n    private val taskViewModel: TaskViewModel by viewModels {\r\n        TaskItemModelFactory((application as TodoApplication).repository)\r\n    }\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        binding = ActivityMainBinding.inflate(layoutInflater)\r\n        setContentView(binding.root)\r\n\r\n        binding.newTaskButton.setOnClickListener {\r\n            NewTaskSheet(null).show(supportFragmentManager, \"newTaskTag\")\r\n        }\r\n        setRecyclerView()\r\n    }\r\n\r\n    private fun setRecyclerView() {\r\n        val mainActivity = this\r\n        taskViewModel.taskItems.observe(this) {\r\n            binding.todoListRecyclerView.apply {\r\n                layoutManager = LinearLayoutManager(mainActivity)\r\n                adapter = TaskItemAdapter(it, mainActivity)\r\n            }\r\n        }\r\n    }\r\n\r\n    override fun editTaskItem(taskItem: TaskItem) {\r\n        NewTaskSheet(taskItem).show(supportFragmentManager, \"newTaskTag\")\r\n    }\r\n\r\n    override fun completeTaskItem(taskItem: TaskItem) {\r\n        taskViewModel.setCompleted(taskItem)\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/adarsha/todolist/MainActivity.kt b/app/src/main/java/com/adarsha/todolist/MainActivity.kt
+--- a/app/src/main/java/com/adarsha/todolist/MainActivity.kt	(revision c7ece8ff73335cde6e61da112d708e546c5febb2)
++++ b/app/src/main/java/com/adarsha/todolist/MainActivity.kt	(date 1739500038687)
+@@ -40,4 +40,9 @@
+     override fun completeTaskItem(taskItem: TaskItem) {
+         taskViewModel.setCompleted(taskItem)
+     }
++
++    override fun deleteTaskItem(taskItem: TaskItem) {
++        taskViewModel.deleteTaskItem(taskItem)
++    }
++
+ }
+Index: app/src/main/java/com/adarsha/todolist/TaskItemRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.adarsha.todolist\r\n\r\nimport androidx.annotation.WorkerThread\r\nimport kotlinx.coroutines.flow.Flow\r\n\r\nclass TaskItemRepository(private val taskItemDao: TaskItemDao)\r\n{\r\n    val allTaskItems: Flow<List<TaskItem>> = taskItemDao.allTaskItems()\r\n\r\n    @WorkerThread\r\n    suspend fun insertTaskItem(taskItem: TaskItem)\r\n    {\r\n        taskItemDao.insertTaskItem(taskItem)\r\n    }\r\n\r\n    @WorkerThread\r\n    suspend fun updateTaskItem(taskItem: TaskItem)\r\n    {\r\n        taskItemDao.updateTaskItem(taskItem)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/adarsha/todolist/TaskItemRepository.kt b/app/src/main/java/com/adarsha/todolist/TaskItemRepository.kt
+--- a/app/src/main/java/com/adarsha/todolist/TaskItemRepository.kt	(revision c7ece8ff73335cde6e61da112d708e546c5febb2)
++++ b/app/src/main/java/com/adarsha/todolist/TaskItemRepository.kt	(date 1739498570095)
+@@ -18,4 +18,10 @@
+     {
+         taskItemDao.updateTaskItem(taskItem)
+     }
++
++    @WorkerThread
++    suspend fun deleteTaskItem(taskItem: TaskItem)
++    {
++        taskItemDao.deleteTaskItem(taskItem)
++    }
+ }
+\ No newline at end of file

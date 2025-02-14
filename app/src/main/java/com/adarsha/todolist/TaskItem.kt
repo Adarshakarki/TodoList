@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 import java.time.format.DateTimeFormatter
 
 @Entity(tableName = "task_item_table")
-class TaskItem(
+data class TaskItem(
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "desc") var desc: String,
     @ColumnInfo(name = "dueTimeString") var dueTimeString: String?,
@@ -18,7 +18,6 @@ class TaskItem(
     @PrimaryKey(autoGenerate = true) var id: Int = 0
 )
 {
-
     private fun completedDate(): LocalDate? = if (completedDateString == null) null else LocalDate.parse(completedDateString, dateFormatter)
     fun dueTime(): LocalTime? = if (dueTimeString == null) null else LocalTime.parse(dueTimeString, timeFormatter)
 

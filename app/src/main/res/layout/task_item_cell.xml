@@ -44,5 +44,15 @@
             android:layout_gravity="center"
             />
 
+        <ImageButton
+            android:contentDescription="@string/delete"
+            android:id="@+id/deleteButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/delete_24px"
+            android:layout_gravity="center"
+            android:scaleY="1.5"
+            android:backgroundTint="@android:color/transparent"
+            app:tint="@color/red" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
