@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#6200EE</color> <!-- Purple -->
-    <color name="onPrimary">#FFFFFF</color> <!-- White text on primary -->
-    <color name="background">#FFFFFF</color> <!-- White background -->
-    <color name="onBackground">#000000</color> <!-- Black text -->
-    <color name="surface">#F5F5F5</color> <!-- Light gray for surfaces -->
-    <color name="onSurface">#000000</color> <!-- Black text on surface -->
-    <color name="secondary">#BB86FC</color> <!-- Lighter purple -->
-    <color name="onSecondary">#000000</color> <!-- Black text on secondary -->
+    <color name="primary">#6200EE</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="background">#FFFFFF</color>
+    <color name="onBackground">#000000</color>
+    <color name="surface">#F5F5F5</color>
+    <color name="onSurface">#000000</color>
+    <color name="secondary">#BB86FC</color>
+    <color name="onSecondary">#000000</color>
     <color name= "Red">#FF0000</color>
 </resources>

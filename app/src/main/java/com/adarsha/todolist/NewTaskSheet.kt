@@ -49,8 +49,8 @@ class NewTaskSheet(private var taskItem: TaskItem?) : BottomSheetDialogFragment(
         TimePickerDialog(
             requireContext(),
             listener,
-            dueTime?.hour ?: 0,  // Default to 0 if dueTime is still null
-            dueTime?.minute ?: 0, // Default to 0 if dueTime is still null
+            dueTime?.hour ?: 0,
+            dueTime?.minute ?: 0,
             true
         ).apply {
             setTitle(getString(R.string.task_due))
@@ -72,14 +72,14 @@ class NewTaskSheet(private var taskItem: TaskItem?) : BottomSheetDialogFragment(
         val desc = binding.desc.text.toString().trim()
         val dueTimeString = dueTime?.let { TaskItem.timeFormatter.format(it) }
 
-        if (name.isNotEmpty()) { // Prevent empty tasks
+        if (name.isNotEmpty()) {
             if (taskItem == null) {
                 val newTask = TaskItem(name, desc, dueTimeString, null)
                 taskViewModel.addTaskItem(newTask)
             } else {
                 taskItem?.apply {
                     this.name = name
-                    this.desc = desc // Fixed incorrect assignment
+                    this.desc = desc
                     this.dueTimeString = dueTimeString
                     taskViewModel.updateTaskItem(this)
                 }
