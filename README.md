@@ -22,5 +22,5 @@ The To-Do List app is a simple and easy-to-use task manager that helps you stay 
 | ------------- | ------------- | ------------- |
 | Home screen | ![](Images/home_light.png)  | ![](Images/home_dark.png) |
 | Add New Task  | ![](Images/newtask_light.png)  | ![](Images/newtask_dark.png)  |
-| Set Time  | ![](Images/clock_light)  | ![](Images/clock_dark) |
+| Set Time  | ![](Images/clock_light.png)  | ![](Images/clock_dark.png) |
 | Edit Task  | ![](Images/edittask_light.png) | ![](Images/edittask_dark.png)  |
