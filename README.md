@@ -20,7 +20,7 @@ The To-Do List app is a simple and easy-to-use task manager that helps you stay 
 
 | Description  | Light Mode | Dark mode |
 | ------------- | ------------- | ------------- |
-| Home screen | [homelight](Images/home_dark.png)  | [](https://github.com/Adarshakarki/Todolist/blob/master/Images/home_dark.png)  |
-| Add New Task  | Content Cell  | Content Cell  |
-| Set Time  | Content Cell  | Content Cell  |
-| Edit Task  | Content Cell  | Content Cell  |
+| Home screen | [](Images/home_light.png)  | [](Images/home_dark.png) |
+| Add New Task  | [](Images/newtask_light.png)  | [](Images/newtask_dark.png)  |
+| Set Time  | [](Images/clock_light)  | [](Images/clock_dark)  |
+| Edit Task  | [](Images/edittask_light.png) | [](Images/edittask_dark.png)  |
