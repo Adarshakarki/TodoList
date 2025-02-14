@@ -23,10 +23,10 @@ data class TaskItem(
 
     fun isCompleted() = completedDate() != null
     fun imageResource(): Int = if(isCompleted()) R.drawable.checked_24 else R.drawable.unchecked_24
-    fun imageColor(context: Context): Int = if(isCompleted()) navy(context) else black(context)
+    fun imageColor(context: Context): Int = if(isCompleted()) primary(context) else onsurface(context)
 
-    private fun navy(context: Context) = ContextCompat.getColor(context, R.color.navy)
-    private fun black(context: Context) = ContextCompat.getColor(context, R.color.black)
+    private fun primary(context: Context) = ContextCompat.getColor(context, R.color.primary)
+    private fun onsurface(context: Context) = ContextCompat.getColor(context, R.color.onSurface)
 
     companion object {
         val timeFormatter: DateTimeFormatter = DateTimeFormatter.ISO_TIME

@@ -11,19 +11,23 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground">
 
         <ImageButton
             android:id="@+id/completeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginHorizontal="15dp"
             android:backgroundTint="@android:color/transparent"
             android:contentDescription="@string/checkbox"
             android:scaleX="1.5"
             android:scaleY="1.5"
             android:src="@drawable/unchecked_24"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:background="?attr/colorSurface"
+            app:tint="?attr/colorOnSurface"/>
+
 
         <TextView
             android:layout_width="0dp"
@@ -32,7 +36,8 @@
             android:text="@string/place_holder"
             style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            />
 
         <TextView
             android:layout_marginHorizontal="5dp"
@@ -53,6 +58,6 @@
             android:layout_gravity="center"
             android:scaleY="1.5"
             android:backgroundTint="@android:color/transparent"
-            app:tint="@color/red" />
+            app:tint="@color/Red" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

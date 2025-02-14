@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#FFD600</color> <!-- Dark Yellow -->
+    <color name="primary">#BB86FC</color> <!-- Lighter purple -->
     <color name="onPrimary">#000000</color> <!-- Black text on primary -->
-    <color name="background">#121212</color> <!-- Dark background -->
-    <color name="onBackground">#FFFFFF</color> <!-- White text on dark background -->
-
-    <color name="purple_200">#BB86FC</color>
-    <color name="purple_500">#6200EE</color>
-    <color name="purple_700">#3700B3</color>
-    <color name="teal_200">#03DAC5</color>
-    <color name="teal_700">#018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="yellow">#FFEB00</color>
-    <color name="navy">#493D9E</color>
-    <color name="LightYellow">#FFD600</color> <!-- Darker Yellow for contrast -->
-    <color name="red">#FF0000</color>
+    <color name="background">#121212</color> <!-- Dark mode background -->
+    <color name="onBackground">#FFFFFF</color> <!-- White text -->
+    <color name="surface">#1E1E1E</color> <!-- Darker background for surfaces -->
+    <color name="onSurface">#FFFFFF</color> <!-- White text on surface -->
+    <color name="secondary">#03DAC6</color> <!-- Teal for contrast -->
+    <color name="onSecondary">#000000</color> <!-- Black text on secondary -->
 </resources>
-
-
-

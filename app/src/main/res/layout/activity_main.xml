@@ -17,13 +17,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_task"
-        app:backgroundTint="@color/LightYellow"
-        android:textColor="@color/navy"
+        app:backgroundTint="@color/primary"
+        android:textColor="@color/onPrimary"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
         app:icon="@drawable/ic_baseline_add_24"
-        app:iconTint="@color/navy"
+        app:iconTint="@color/onPrimary"
         app:strokeWidth="2dp"
-        app:strokeColor="@color/navy"/>
+        app:strokeColor="@color/primary"/>
 </RelativeLayout>
