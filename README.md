@@ -1,8 +1,8 @@
-# Overview
+# 🎤 Overview
 
 The To-Do List app is a simple and easy-to-use task manager that helps you stay organized. Whether you need to remember daily tasks, set priorities, or track completed work, this app makes it effortless. With a clean and user-friendly interface, you can quickly add, edit, and manage your to-do list with just a few taps.
 
-## Features
+## 📝Features
 
 * Add Tasks: Easily create new tasks to keep track of what you need to do.
 
@@ -16,7 +16,7 @@ The To-Do List app is a simple and easy-to-use task manager that helps you stay 
 
 * Stay on top of your to-do list and manage your tasks effortlessly!
 
-## Screenshots
+## 📷Screenshots
 
 | Description  | Light Mode | Dark mode |
 | ------------- | ------------- | ------------- |
